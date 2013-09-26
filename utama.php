@@ -1,5 +1,6 @@
 <?php
 include "koneksi.php";
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@ include "koneksi.php";
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/jquery.pnotify.min.js"></script>
 
-        <title>SISTEM INFORMASI DIGITALISASI ARSIP SURAT</title>
+        <title>SISTEM INFORMASI DIGITALISASI SURAT DAN DOKUMEN</title>
         <script>
             $(document).ready(function() {
                 $(".form-horizontal").hide();
@@ -45,7 +46,7 @@ include "koneksi.php";
                                             </a>                        
                                         </li>
                                         <li class=''>
-                                            <a href="#">
+                                            <a href="logout.php">
                                                 <i class="icon-off icon-white"></i>
                                                 <span>Log Out</span>
                                             </a>                        
@@ -63,23 +64,31 @@ include "koneksi.php";
                         <div class="span3 well" style="max-width: 340px; padding: 8px 0;">
                             <ul class="nav nav-list">
                                 <li class="nav-header"><i class="icon-envelope"></i>Menu</li>
-                                <li><a href="#">Surat Masuk</a></li>
-                                <li><a href="#">Surat Keluar</a></li>
-                                <li><a href="#">Data Disposisi Masuk</a></li>
-                                <li><a href="#">Data Arsip Surat</a></li>
+                                <li><a href="SURAT_MASUK/surat_masuk.php">Surat Masuk</a></li>
+                                <li><a href="SURAT_KELUAR/surat_keluar.php">Surat Keluar</a></li>
+                                <li><a href="utama.php?p=arsip">Arsip Surat Dan Dokumen</a></li>
                                 <li class="divider"></li>
                                 <li class="nav-header"><i class="icon-bell"></i>Notifikasi</li>
-                                <li><a href="#">ada <span class="badge badge-warning">4</span> surat masuk</a></li>
+                                
+                                <?php
+                                    $id_user = $_SESSION['id'];
+                                    $sql = "SELECT count(*) as tot FROM t_kirim_surat WHERE id_user='$id_user' AND status='Belum Terbaca'";
+                                    $data = ambil_data_sql($sql);
+                                    $tot = $data[0];
+                                ?>
+                                
+                                <li><a href="#">ada <span class="badge badge-warning"><?php echo $tot; ?></span> surat masuk</a></li>
                                 <li class="divider"></li>
                                 <li class="nav-header"><i class="icon-th-list"></i>MASTER DATA</li>
                                 <li><a href="utama.php?p=user">Data User</a></li>
                                 <li><a href="utama.php?p=kop">Data Kop Surat</a></li>
                                 <li><a href="utama.php?p=jenis">Data Jenis Surat</a></li>
+                                <li><a href="utama.php?p=disposisi">Data Disposisi Masuk</a></li>
                                 <li class="divider"></li>
                                 <li class="nav-header"><i class="icon-user"></i>informasi login</li>
-                                <li><a href="#">Irawaty</a></li>
-                                <li><a href="#">23 September 2013 08:30</a></li>
-                                <li><a href="#">Sebagai Administrator</a></li>
+                                <li><a href="#"><?php echo $_SESSION['nama']; ?></a></li>
+                                <li><a href="#"><?php echo DATE("d F Y, H:m:s"); ?></a></li>
+                                <li><a href="#"><?php echo $_SESSION['level']; ?></a></li>
                             </ul>
                         </div>
                         <div class="span8">
@@ -95,6 +104,15 @@ include "koneksi.php";
                                         break;
                                     case "kop":
                                         include "KOP_SURAT/kop.php";
+                                        break;
+                                    case "surat_keluar":
+                                        include "SURAT_KELUAR/surat_keluar.php";
+                                        break;
+                                    case "disposisi":
+                                        include "DISPOSISI_SURAT/disposisi.php";
+                                        break;
+                                    case "arsip":
+                                        include "ARSIP/arsip.php";
                                         break;
                                 }
                             } else {

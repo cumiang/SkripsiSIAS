@@ -53,15 +53,24 @@
                         <h2><img src="img/stia_logo.jpg" class="img-circle" width="65" height="65">&nbsp;&nbsp;LOGIN</h2>
                         <hr>
                         <form method="POST" action="cek_login.php">
-                            <fieldset>
-                                <div class="clearfix">
-                                    <input type="text" placeholder="Nama User" name="user" id="user">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-user"></i></span>
+                                        <input class="span2" placeholder="Nama User" name="user" id="user" type="text">
+                                    </div>
                                 </div>
-                                <div class="clearfix">
-                                    <input type="password" placeholder="Password" name="pass" id="pass">
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                        <input class="span2" name="pass" id="pass" type="password" placeholder="Password">
+                                    </div>
                                 </div>
-                                <button class="btn primary" type="submit">Masuk</button>
-                            </fieldset>
+                            </div>
+                            <button class="btn primary" type="submit">Masuk</button>
+
                         </form>
                     </div>
                 </div>
